@@ -11,7 +11,12 @@ package Entity;
  */
 public class Reminder {
     private String title;
-    private String date;
+    private Date date;
+
+    public Reminder(String title, Date date) {
+        this.title = title;
+        this.date = date;
+    }
 
     public String getTitle() {
         return title;
@@ -21,11 +26,11 @@ public class Reminder {
         this.title = title;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 }

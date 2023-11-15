@@ -11,6 +11,10 @@ package Entity;
 public class ItemNote {
     private String note;
 
+    public ItemNote(String note) {
+        this.note = note;
+    }
+
     public String getNote() {
         return note;
     }

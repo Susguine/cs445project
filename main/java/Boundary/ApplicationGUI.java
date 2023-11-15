@@ -7,7 +7,7 @@ package Boundary;
 /**
  * This class manages the user interface of the application, allowing users to interact with 
  * and view items, notes, tasks, and other information
- * 
+ *
  * @author rschi
  */
 public class ApplicationGUI {
@@ -15,4 +15,8 @@ public class ApplicationGUI {
     private DateScreen dateScreen;
     private ItemScreen itemScreen;
     private ReminderScreen reminderScreen;
+
+    public static void main(String[] args) {
+
+    }
 }

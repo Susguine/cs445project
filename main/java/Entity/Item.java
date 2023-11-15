@@ -14,6 +14,12 @@ public class Item {
     private String title;
     private String action;
 
+    public Item(ItemNote itemNote, String title, String action) {
+        this.itemNote = itemNote;
+        this.title = title;
+        this.action = action;
+    }
+
     public ItemNote getItemNote() {
         return itemNote;
     }

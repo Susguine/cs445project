@@ -7,12 +7,17 @@ package Entity;
 /**
  * This class represents the core functionality of the weather application, which includes retrieving and 
  * processing weather data from external sources or APIs and providing it to the Weather Screen for display
- * 
+ *
  * @author rschi
  */
 public class Weather {
     private int temperature;
     private String condition;
+
+    public Weather(int temperature, String condition) {
+        this.temperature = temperature;
+        this.condition = condition;
+    }
 
     public int getTemperature() {
         return temperature;
