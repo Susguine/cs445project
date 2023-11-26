@@ -5,6 +5,10 @@
 package Control;
 
 import Entity.Item;
+import Entity.ItemNote;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * This class controls and manages the flow of item-related tasks and data within the application, 
@@ -12,13 +16,51 @@ import Entity.Item;
  * @author rschi
  */
 public class ItemController {
-    private Item item;
+    private HashMap<Integer, Item> items;
 
-    public Item getItem() {
-        return item;
+    public Item getItem(int index) {
+        return this.items.get(index);
     }
 
-    public void setItem(Item item) {
-        this.item = item;
+    public void addItem(String itemNote, String title, String action) {
+        int key = 0;
+
+        if (this.items.size() < 10) {
+            Item item = new Item(new ItemNote(itemNote), title, action);
+
+            for (int i = 0; i < 10; i++) {
+                if (!this.items.containsKey(i)) {
+                    key = i;
+                    break;
+                }
+            }
+
+            this.items.put(key, item);
+        }
+    }
+
+    public void deleteItem(int index) {
+        this.items.remove(index);
+    }
+
+    public void deleteAllItems() {
+        this.items.clear();
+    }
+
+    public int getItemIndex(Item item) {
+        int index = -1;
+
+        if (this.items.containsValue(item)) {
+            for (HashMap.Entry<Integer, Item> entry : this.items.entrySet()) {
+                if (Objects.equals(entry.getValue(), item)) {
+                    index = entry.getKey();
+                }
+            }
+
+            return index;
+        } else {
+            System.out.println("Item is not found in HashMap");
+            return -1;
+        }
     }
 }

@@ -14,12 +14,22 @@ import Entity.Date;
  * @author rschi
  */
 public class AlertController {
+    Alert alert;
+
     public Alert sendAlert(Alert alert) {
 
-        return alert; // delete this and insert send alert logic
+        return alert;
     }
 
-    public Alert createAlert(String title, Date date) {
-        return new Alert(title, date);
+    public void createAlert(String title, Date date) {
+        this.alert = new Alert(title, date);
+    }
+
+    public Alert getAlert() {
+        return alert;
+    }
+
+    public void setAlert(Alert alert) {
+        this.alert = alert;
     }
 }
