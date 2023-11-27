@@ -7,6 +7,7 @@ package Control;
 import Entity.Item;
 import Entity.Note;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -18,8 +19,16 @@ import java.util.Objects;
 public class ItemController {
     public static HashMap<Integer, Item> items;
 
-    public static Item getItem(int index) {
-        return items.get(index);
+    public static ArrayList<String> getItem(int index) {
+        ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add(items.get(index).getTitle());
+        arrayList.add(items.get(index).getItemNote().getNote());
+
+        return arrayList;
+    }
+
+    public static void setItem(String note, String title, int index) {
+        items.put(index, new Item(new Note(note), title));
     }
 
     public static void addItem(String note, String title) {
