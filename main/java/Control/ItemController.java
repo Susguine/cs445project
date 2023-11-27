@@ -16,42 +16,42 @@ import java.util.Objects;
  * @author rschi
  */
 public class ItemController {
-    private HashMap<Integer, Item> items;
+    public static HashMap<Integer, Item> items;
 
-    public Item getItem(int index) {
-        return this.items.get(index);
+    public static Item getItem(int index) {
+        return items.get(index);
     }
 
-    public void addItem(String note, String title) {
+    public static void addItem(String note, String title) {
         int key = 0;
 
-        if (this.items.size() < 10) {
+        if (items.size() < 10) {
             Item item = new Item(new Note(note), title);
 
             for (int i = 0; i < 10; i++) {
-                if (!this.items.containsKey(i)) {
+                if (!items.containsKey(i)) {
                     key = i;
                     break;
                 }
             }
 
-            this.items.put(key, item);
+            items.put(key, item);
         }
     }
 
-    public void deleteItem(int index) {
-        this.items.remove(index);
+    public static void deleteItem(int index) {
+        items.remove(index);
     }
 
-    public void deleteAllItems() {
-        this.items.clear();
+    public static void deleteAllItems() {
+        items.clear();
     }
 
-    public int getItemIndex(Item item) {
+    public static int getItemIndex(Item item) {
         int index = -1;
 
-        if (this.items.containsValue(item)) {
-            for (HashMap.Entry<Integer, Item> entry : this.items.entrySet()) {
+        if (items.containsValue(item)) {
+            for (HashMap.Entry<Integer, Item> entry : items.entrySet()) {
                 if (Objects.equals(entry.getValue(), item)) {
                     index = entry.getKey();
                 }
