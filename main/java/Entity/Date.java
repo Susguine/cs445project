@@ -4,24 +4,24 @@
  */
 package Entity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * This class represents a specific date within the application
  * @author rschi
  */
 public class Date {
-    private LocalDate date;
+    private LocalDateTime date;
 
-    public Date(LocalDate date) {
+    public Date(LocalDateTime date) {
         this.date = date;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 }
