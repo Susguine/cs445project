@@ -4,6 +4,7 @@
  */
 package Boundary;
 
+import Control.WeatherController;
 import Entity.Weather;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -11,6 +12,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -18,10 +23,11 @@ import javafx.stage.Stage;
  * @author rschi
  */
 public class WeatherScreen extends ApplicationGUI{
-    private Weather currentWeather;
-
     public static void GetWeatherScreen(Stage stage, Scene main_menu) {
         Group grid = new Group();
+
+        Weather currentWeather;
+        WeatherController controller = new WeatherController();
         //adding rungs to the notebook
         int y = 15;
         for(int i = 0; i < 150;i++) {
@@ -46,5 +52,25 @@ public class WeatherScreen extends ApplicationGUI{
             Scene weather_page = new Scene(grid,600,800);
             weather_page.setFill(ApplicationGUI.c1);
             stage.setScene(weather_page);
+
+        //EXAMPLE --- REMOVE
+        controller.setWeather();
+        currentWeather = controller.getWeather();
+
+        Text title1 = new Text();
+        title1.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
+        title1.setFill(Color.CRIMSON);
+        title1.setText(String.valueOf(currentWeather.getTemperature()));
+        title1.setLayoutX(100);
+        title1.setLayoutY(60);
+        grid.getChildren().add(title1);
+
+        Text title2 = new Text();
+        title2.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
+        title2.setFill(Color.CRIMSON);
+        title2.setText(String.valueOf(currentWeather.getCondition()));
+        title2.setLayoutX(100);
+        title2.setLayoutY(90);
+        grid.getChildren().add(title2);
     }
 }
