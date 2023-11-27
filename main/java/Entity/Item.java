@@ -10,22 +10,20 @@ package Entity;
  * @author rschi
  */
 public class Item {
-    private ItemNote itemNote;
+    private Note note;
     private String title;
-    private String action;
 
-    public Item(ItemNote itemNote, String title, String action) {
-        this.itemNote = itemNote;
+    public Item(Note note, String title) {
+        this.note = note;
         this.title = title;
-        this.action = action;
     }
 
-    public ItemNote getItemNote() {
-        return itemNote;
+    public Note getItemNote() {
+        return note;
     }
 
-    public void setItemNote(ItemNote itemNote) {
-        this.itemNote = itemNote;
+    public void setItemNote(Note itemNote) {
+        this.note = note;
     }
 
     public String getTitle() {
@@ -34,13 +32,5 @@ public class Item {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getAction() {
-        return action;
-    }
-
-    public void setAction(String action) {
-        this.action = action;
     }
 }

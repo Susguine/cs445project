@@ -5,8 +5,8 @@
 package Control;
 
 import Entity.Item;
-import Entity.ItemNote;
-import java.util.Dictionary;
+import Entity.Note;
+
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -22,11 +22,11 @@ public class ItemController {
         return this.items.get(index);
     }
 
-    public void addItem(String itemNote, String title, String action) {
+    public void addItem(String note, String title) {
         int key = 0;
 
         if (this.items.size() < 10) {
-            Item item = new Item(new ItemNote(itemNote), title, action);
+            Item item = new Item(new Note(note), title);
 
             for (int i = 0; i < 10; i++) {
                 if (!this.items.containsKey(i)) {
