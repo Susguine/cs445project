@@ -1,5 +1,6 @@
 package Boundary;
 
+import Control.NoteController;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -63,6 +64,8 @@ public class NoteScreen extends ApplicationGUI{
             confirm.setOnAction(b-> {
                     //here we do the controller and apply to the main screen along with a number that says what item number it is and sussefully edit it.
                     //make sure to double check if there is a note added or not
+                    String v = ne.getText();
+                    NoteController.setNote(v);
                     grid.getChildren().removeAll(centering,item,ne);
                     grid.getChildren().add(btnHB);
                 });
@@ -84,6 +87,7 @@ public class NoteScreen extends ApplicationGUI{
             confirm.setOnAction(b-> {
                     //here we do the controller and apply to the main screen along with a number that says what item number it is!!
                     //make sure to double check if there is a note added or not
+                    NoteController.deleteNote();
                     grid.getChildren().remove(centering);
                     grid.getChildren().add(btnHB);
                 });

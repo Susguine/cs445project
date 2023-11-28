@@ -4,7 +4,10 @@
  */
 package Boundary;
 
+import java.util.ArrayList;
+
 import Control.ItemController;
+import Control.ReminderController;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -24,6 +27,7 @@ import javafx.stage.Stage;
  */
 public class ItemScreen extends ApplicationGUI{
     private ItemController itemController;
+    private static int confirm_num;
 
     public static void GetItemScreen(Stage stage, Scene main_menu) {
         Group grid = new Group();
@@ -40,6 +44,7 @@ public class ItemScreen extends ApplicationGUI{
             y = y + 15;
         }
 
+        
         Button b_b_m = new Button("Back To Main Page");
         Button ai = new Button("Add Item");
         Button ei = new Button("Edit Item");
@@ -87,6 +92,9 @@ public class ItemScreen extends ApplicationGUI{
             confirm.setOnAction(b-> {
                     //here we do the controller and apply to the main screen along with a number that says what item number it is!!
                     //make sure to double check if there is a note added or not
+                    String i = input.getText();
+                    String inl = item_note.getText();
+                    ItemController.addItem(inl, i);
                     grid.getChildren().removeAll(input,centering,item_note,note_label,item);
                     grid.getChildren().add(btnHB);
                 });
@@ -143,10 +151,20 @@ public class ItemScreen extends ApplicationGUI{
             grid.getChildren().addAll(ion,ie,centering,ine,note_label,item,number,cn);
             cn.setOnAction(m-> {
                     //make sure to get items and fill the Text area from the entities class here
+                    String val = ie.getText();
+                    confirm_num = Integer.parseInt(val);
+                    ArrayList<String> item_e = new ArrayList<>();
+                    item_e = ItemController.getItem(confirm_num);
+                    ie.appendText(item_e.get(0));
+                    ine.appendText(item_e.get(1));
                 });
             confirm.setOnAction(b-> {
                     //here we do the controller and apply to the main screen along with a number that says what item number it is and sussefully edit it.
                     //make sure to double check if there is a note added or not
+                    //get the item here
+                    String taske = ie.getText();
+                    String taskne = ine.getText();
+                    ItemController.setItem(taskne, taske, confirm_num);
                     grid.getChildren().removeAll(ion,ie,centering,ine,note_label,item,number,cn);
                     grid.getChildren().add(btnHB);
                 });
@@ -156,6 +174,7 @@ public class ItemScreen extends ApplicationGUI{
                     grid.getChildren().add(btnHB);
                 });
             });
+        //delete item button below
         di.setOnAction(e-> {
             grid.getChildren().remove(btnHB);
             Text number = new Text("Enter Number of Item to Delete Below:");
@@ -179,6 +198,9 @@ public class ItemScreen extends ApplicationGUI{
             confirm.setOnAction(b-> {
                     //here we do the controller and apply to the main screen along with a number that says what item number it is!!
                     //make sure to double check if there is a note added or not
+                    String user_input1 = ion.getText();
+                    int arg = Integer.parseInt(user_input1);
+                    ItemController.deleteItem(arg);
                     grid.getChildren().removeAll(ion,centering,number);
                     grid.getChildren().add(btnHB);
                 });

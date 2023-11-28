@@ -5,6 +5,7 @@
 package Boundary;
 
 import Control.ReminderController;
+import Entity.Reminder;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -18,6 +19,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import java.util.*;
 
 /**
  *This class displays reminders and facilitates the creation, editing, and deletion of reminders
@@ -193,7 +195,7 @@ public class ReminderScreen extends ApplicationGUI{
             TextArea input = new TextArea();
             TextArea time_date = new TextArea();
             Text r = new Text("Enter Reminder Below:");
-            Text rtl = new Text("Enter Reminder Time and Date Below (Layout in here):");
+            Text rtl = new Text("Enter Reminder Time and Date Below (MM/DD/YYYY (Space) TT:TT PM or AM):");
             Button confirm = new Button("Confirm");
             Button back = new Button("Back");
             input.setLayoutX(150);
@@ -219,6 +221,9 @@ public class ReminderScreen extends ApplicationGUI{
             confirm.setOnAction(b-> {
                     //here we do the controller and apply to the reminder screen along with a number that says what item number it is!!
                     //make sure to double check if there is a note added or not
+                    String reminder = input.getText();
+                    String dt = time_date.getText();
+                    ReminderController.addItem(reminder, dt);
                     grid.getChildren().removeAll(input,centering,r,time_date,rtl);
                     grid.getChildren().add(btnHB);
                     grid.getChildren().addAll(l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16,l17,l18,l19,l20,l21,l22,l23);
@@ -243,7 +248,7 @@ public class ReminderScreen extends ApplicationGUI{
             TextArea ion = new TextArea();
             TextArea ie = new TextArea();
             TextArea ine = new TextArea();
-            Text note_label = new Text("Change Time and Date for Reminder Below (Layout in here):");
+            Text note_label = new Text("Change Time and Date for Reminder Below (MM/DD/YYYY (Space) TT:TT PM or AM):");
             Button confirm = new Button("Confirm Changes");
             Button cn = new Button("Confirm Number");
             Button back = new Button("Back");
@@ -279,12 +284,21 @@ public class ReminderScreen extends ApplicationGUI{
             centering.setLayoutY(540);
             centering.getChildren().addAll(confirm,back);
             grid.getChildren().addAll(ion,ie,centering,ine,note_label,item,number,cn);
+            int n_change;
             cn.setOnAction(m-> {
                     //make sure to get items and fill the Text area from the entities class here
+                    n_change = Integer.parseInt(ion.getText());
+                    ArrayList<String> rdt = new ArrayList<>();
+                    rdt = ReminderController.getItem(n_change);
+                    ie.appendText(rdt.get(0));
+                    ine.appendText(rdt.get(1));
                 });
             confirm.setOnAction(b-> {
                     //here we do the controller and apply to the reminder screen along with a number that says what item number it is and sussefully edit it.
                     //make sure to double check if there is a note added or not
+                    String reminder = ie.getText();
+                    String dt = ine.getText();
+                    ReminderController.setItem(reminder, dt, n_change);
                     grid.getChildren().removeAll(ion,ie,centering,ine,note_label,item,number,cn);
                     grid.getChildren().add(btnHB);
                     grid.getChildren().addAll(l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16,l17,l18,l19,l20,l21,l22,l23);
@@ -323,6 +337,8 @@ public class ReminderScreen extends ApplicationGUI{
             confirm.setOnAction(b-> {
                     //here we do the controller and apply to the reminder screen along with a number that says what item number it is!!
                     //make sure to double check if there is a note added or not
+                    int num = Integer.parseInt(ion.getText());
+                    ReminderController.deleteItem(num);
                     grid.getChildren().removeAll(ion,centering,number);
                     grid.getChildren().add(btnHB);
                     grid.getChildren().addAll(l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16,l17,l18,l19,l20,l21,l22,l23);

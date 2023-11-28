@@ -1,5 +1,8 @@
 package Boundary;
 
+import Control.ItemController;
+import Control.NoteController;
+import Control.ReminderController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
@@ -44,8 +47,9 @@ public class SettingsScreen extends ApplicationGUI{
             stage.setScene(main_menu);
             });
         sb3.setOnAction(e-> { 
-            //clear all entity classes of everything and update all the screens accordingly
-            //may have to pass all the display screens here to update
+            ItemController.deleteAllItems();
+            NoteController.deleteNote();
+            ReminderController.deleteAllItems();
             });
         sb2.setOnAction(e-> { 
             ApplicationGUI.c1 = Color.LIGHTGREEN;
