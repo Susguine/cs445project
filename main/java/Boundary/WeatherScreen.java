@@ -26,8 +26,6 @@ public class WeatherScreen extends ApplicationGUI{
     public static void GetWeatherScreen(Stage stage, Scene main_menu) {
         Group grid = new Group();
 
-        Weather currentWeather;
-        WeatherController controller = new WeatherController();
         //adding rungs to the notebook
         int y = 15;
         for(int i = 0; i < 150;i++) {
@@ -54,8 +52,7 @@ public class WeatherScreen extends ApplicationGUI{
             stage.setScene(weather_page);
 
         //EXAMPLE --- REMOVE
-        controller.setWeather();
-        currentWeather = controller.getWeather();
+        Weather currentWeather = WeatherAPI.getWeather();
 
         Text title1 = new Text();
         title1.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));

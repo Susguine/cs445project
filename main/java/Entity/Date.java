@@ -11,17 +11,27 @@ import java.time.LocalDateTime;
  * @author rschi
  */
 public class Date {
-    private LocalDateTime date;
+    private String date;
+    private String time;
 
-    public Date(LocalDateTime date) {
+    public Date(String date, String time) {
         this.date = date;
+        this.time = time;
     }
 
-    public LocalDateTime getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }
