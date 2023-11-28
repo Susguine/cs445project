@@ -4,7 +4,12 @@
  */
 package Control;
 
+import Entity.Date;
 import Entity.Reminder;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * This class controls and manages the flow of reminder-related tasks and data between 
@@ -12,13 +17,59 @@ import Entity.Reminder;
  * @author rschi
  */
 public class ReminderController {
-    private Reminder reminder;
+    private static HashMap<Integer, Reminder> reminders = new HashMap<>();
 
-    public Reminder getReminder() {
-        return reminder;
+    public static ArrayList<String> getItem(int index) {
+        ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add(reminders.get(index).getTitle());
+        arrayList.add(reminders.get(index).getDate().toString());
+
+        return arrayList;
     }
 
-    public void setReminder(Reminder reminder) {
-        this.reminder = reminder;
+    public static void setItem(String title, LocalDateTime date, int index) {
+        reminders.put(index, new Reminder(title, new Date(date)));
+    }
+
+    public static void addItem(String title, LocalDateTime date) {
+        int key = 0;
+
+        if (reminders.size() < 10) {
+            Reminder reminder = new Reminder(title, new Date(date));
+
+            for (int i = 0; i < 10; i++) {
+                if (!reminders.containsKey(i)) {
+                    key = i;
+                    break;
+                }
+            }
+
+            reminders.put(key, reminder);
+        }
+    }
+
+    public static void deleteItem(int index) {
+        reminders.remove(index);
+    }
+
+    public static void deleteAllItems() {
+        reminders.clear();
+    }
+
+    public static int getItemIndex(Reminder reminder) {
+        int index = -1;
+
+        if (reminders.containsValue(reminder)) {
+            for (HashMap.Entry<Integer, Reminder> entry : reminders.entrySet()) {
+                if (Objects.equals(entry.getValue(), reminder)) {
+                    index = entry.getKey();
+                }
+            }
+
+            return index;
+        } else {
+            System.out.println("Item is not found in HashMap");
+            return -1;
+        }
     }
 }
