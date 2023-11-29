@@ -22,8 +22,11 @@ public class ReminderController {
 
     public static ArrayList<String> getItem(int index) {
         ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.add(reminders.get(index).getTitle());
-        arrayList.add(reminders.get(index).getDate().toString());
+        if(reminders.get(index) != null) {
+            arrayList.add(reminders.get(index).getTitle());
+            arrayList.add(reminders.get(index).getDate().getDate());
+            arrayList.add(reminders.get(index).getDate().getTime());
+        }
 
         return arrayList;
     }

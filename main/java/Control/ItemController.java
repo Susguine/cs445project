@@ -17,12 +17,14 @@ import java.util.Objects;
  * @author rschi
  */
 public class ItemController {
-    public static HashMap<Integer, Item> items;
+    public static HashMap<Integer, Item> items = new HashMap<>(10);
 
     public static ArrayList<String> getItem(int index) {
         ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.add(items.get(index).getTitle());
-        arrayList.add(items.get(index).getItemNote().getNote());
+        if(items.get(index) != null) {
+            arrayList.add(items.get(index).getTitle());
+            arrayList.add(items.get(index).getItemNote().getNote());
+        }
 
         return arrayList;
     }

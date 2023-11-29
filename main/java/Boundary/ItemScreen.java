@@ -151,8 +151,8 @@ public class ItemScreen extends ApplicationGUI{
             grid.getChildren().addAll(ion,ie,centering,ine,note_label,item,number,cn);
             cn.setOnAction(m-> {
                     //make sure to get items and fill the Text area from the entities class here
-                    String val = ie.getText();
-                    confirm_num = Integer.parseInt(val);
+                    String val = ion.getText();
+                    confirm_num = Integer.parseInt(val) - 1;
                     ArrayList<String> item_e = new ArrayList<>();
                     item_e = ItemController.getItem(confirm_num);
                     ie.appendText(item_e.get(0));
@@ -199,7 +199,7 @@ public class ItemScreen extends ApplicationGUI{
                     //here we do the controller and apply to the main screen along with a number that says what item number it is!!
                     //make sure to double check if there is a note added or not
                     String user_input1 = ion.getText();
-                    int arg = Integer.parseInt(user_input1);
+                    int arg = Integer.parseInt(user_input1) - 1;
                     ItemController.deleteItem(arg);
                     grid.getChildren().removeAll(ion,centering,number);
                     grid.getChildren().add(btnHB);

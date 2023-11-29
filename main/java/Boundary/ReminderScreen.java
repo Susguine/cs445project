@@ -4,8 +4,11 @@
  */
 package Boundary;
 
+import Control.ItemController;
 import Control.ReminderController;
 import Entity.Reminder;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,7 +22,10 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *This class displays reminders and facilitates the creation, editing, and deletion of reminders
@@ -43,6 +49,7 @@ public class ReminderScreen extends ApplicationGUI{
             grid.getChildren().add(c1);
             y = y + 15;
         }
+
         //add 22 lines here
         Line l1 = new Line();
         l1.setStartX(70);
@@ -163,6 +170,29 @@ public class ReminderScreen extends ApplicationGUI{
         //add listener here that updates any time the reminder entity class updates so that we can
         //print the reminders on the screen here as well
 
+        // Reminders
+        Text[] reminders = new Text[22];
+        for (int i = 0; i < 22; i++) {
+            Text textField = new Text();
+            reminders[i] = textField;
+        }
+
+        int line_y = 100;
+        for (int i = 0; i < 22; i++) {
+            reminders[i].setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 16));
+            reminders[i].setLayoutX(70);
+            reminders[i].setLayoutY(line_y - 1);
+            grid.getChildren().add(reminders[i]);
+
+            Timeline itemTimeline = new Timeline(
+                    new KeyFrame(Duration.seconds(1), event -> updateReminders(reminders))
+            );
+            itemTimeline.setCycleCount(Timeline.INDEFINITE);
+            itemTimeline.play();
+
+            line_y = line_y + 30;
+        }
+
         //add title
         Text title1 = new Text();
         title1.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
@@ -192,6 +222,9 @@ public class ReminderScreen extends ApplicationGUI{
             grid.getChildren().removeAll(l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16,l17,l18,l19,l20,l21,l22,l23);
             grid.getChildren().remove(btnHB);
             grid.getChildren().remove(title1);
+            for(int i = 0; i<reminders.length; i++) {
+                grid.getChildren().remove(reminders[i]);
+            }
             TextArea input = new TextArea();
             TextArea time_date = new TextArea();
             Text r = new Text("Enter Reminder Below:");
@@ -228,6 +261,9 @@ public class ReminderScreen extends ApplicationGUI{
                     grid.getChildren().add(btnHB);
                     grid.getChildren().addAll(l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16,l17,l18,l19,l20,l21,l22,l23);
                     grid.getChildren().add(title1);
+                    for(int i = 0; i<reminders.length; i++) {
+                        grid.getChildren().add(reminders[i]);
+                    }
                 });
             back.setOnAction(c-> {
                     //there is no processing just getting back to the other page
@@ -235,6 +271,9 @@ public class ReminderScreen extends ApplicationGUI{
                     grid.getChildren().add(btnHB);
                     grid.getChildren().addAll(l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16,l17,l18,l19,l20,l21,l22,l23);
                     grid.getChildren().add(title1);
+                    for(int i = 0; i<reminders.length; i++) {
+                        grid.getChildren().add(reminders[i]);
+                    }
                 });
             });
         //edit item button below
@@ -243,6 +282,9 @@ public class ReminderScreen extends ApplicationGUI{
             grid.getChildren().removeAll(l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16,l17,l18,l19,l20,l21,l22,l23);
             grid.getChildren().remove(btnHB);
             grid.getChildren().remove(title1);
+            for(int i = 0; i<reminders.length; i++) {
+                grid.getChildren().remove(reminders[i]);
+            }
             Text number = new Text("Enter Number of Reminder Below:");
             Text item = new Text("Change Reminder Below:");
             TextArea ion = new TextArea();
@@ -284,12 +326,12 @@ public class ReminderScreen extends ApplicationGUI{
             centering.setLayoutY(540);
             centering.getChildren().addAll(confirm,back);
             grid.getChildren().addAll(ion,ie,centering,ine,note_label,item,number,cn);
-            int n_change;
+            AtomicInteger n_change = new AtomicInteger();
             cn.setOnAction(m-> {
                     //make sure to get items and fill the Text area from the entities class here
-                    n_change = Integer.parseInt(ion.getText());
+                    n_change.set(Integer.parseInt(ion.getText()));
                     ArrayList<String> rdt = new ArrayList<>();
-                    rdt = ReminderController.getItem(n_change);
+                    rdt = ReminderController.getItem(n_change.get());
                     ie.appendText(rdt.get(0));
                     ine.appendText(rdt.get(1));
                 });
@@ -298,11 +340,14 @@ public class ReminderScreen extends ApplicationGUI{
                     //make sure to double check if there is a note added or not
                     String reminder = ie.getText();
                     String dt = ine.getText();
-                    ReminderController.setItem(reminder, dt, n_change);
+                    ReminderController.setItem(reminder, dt, n_change.get());
                     grid.getChildren().removeAll(ion,ie,centering,ine,note_label,item,number,cn);
                     grid.getChildren().add(btnHB);
                     grid.getChildren().addAll(l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16,l17,l18,l19,l20,l21,l22,l23);
                     grid.getChildren().add(title1);
+                    for(int i = 0; i<reminders.length; i++) {
+                        grid.getChildren().add(reminders[i]);
+                    }
                 });
             back.setOnAction(c-> {
                     //there is no processing just getting back to the other page
@@ -310,10 +355,16 @@ public class ReminderScreen extends ApplicationGUI{
                     grid.getChildren().add(btnHB);
                     grid.getChildren().addAll(l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16,l17,l18,l19,l20,l21,l22,l23);
                     grid.getChildren().add(title1);
+                    for(int i = 0; i<reminders.length; i++) {
+                        grid.getChildren().add(reminders[i]);
+                    }
                 });
             });
         di.setOnAction(e-> {
             grid.getChildren().removeAll(l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16,l17,l18,l19,l20,l21,l22,l23);
+            for(int i = 0; i<reminders.length; i++) {
+                grid.getChildren().remove(reminders[i]);
+            }
             grid.getChildren().remove(btnHB);
             grid.getChildren().remove(title1);
             Text number = new Text("Enter Number of Reminder to Delete Below:");
@@ -337,12 +388,15 @@ public class ReminderScreen extends ApplicationGUI{
             confirm.setOnAction(b-> {
                     //here we do the controller and apply to the reminder screen along with a number that says what item number it is!!
                     //make sure to double check if there is a note added or not
-                    int num = Integer.parseInt(ion.getText());
+                    int num = Integer.parseInt(ion.getText()) - 1;
                     ReminderController.deleteItem(num);
                     grid.getChildren().removeAll(ion,centering,number);
                     grid.getChildren().add(btnHB);
                     grid.getChildren().addAll(l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16,l17,l18,l19,l20,l21,l22,l23);
                     grid.getChildren().add(title1);
+                    for(int i = 0; i<reminders.length; i++) {
+                        grid.getChildren().add(reminders[i]);
+                    }
                 });
             back.setOnAction(c-> {
                     //there is no processing just getting back to the other page
@@ -350,11 +404,25 @@ public class ReminderScreen extends ApplicationGUI{
                     grid.getChildren().add(btnHB);
                     grid.getChildren().addAll(l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16,l17,l18,l19,l20,l21,l22,l23);
                     grid.getChildren().add(title1);
+                    for(int i = 0; i<reminders.length; i++) {
+                        grid.getChildren().add(reminders[i]);
+                    }
                 });
             });
         Scene item_page = new Scene(grid,600,800);
         item_page.setFill(ApplicationGUI.c1);
         stage.setScene(item_page);
+    }
+
+    private static void updateReminders(Text[] reminders) {
+        for (int i = 0; i < 22; i++) {
+            ArrayList<String> reminder = ReminderController.getItem(i);
+            if (!reminder.isEmpty()) {
+                reminders[i].setText(i + 1 + ". " + reminder.get(0) + ": " + reminder.get(1) + " " + reminder.get(2));
+            } else {
+                reminders[i].setText("");
+            }
+        }
     }
 
 }

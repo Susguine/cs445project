@@ -1,5 +1,7 @@
 package Boundary;
 
+import Control.ItemController;
+import Control.NoteController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -8,6 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.effect.ColorInput;
@@ -27,6 +30,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.time.*;
+import java.util.ArrayList;
+
 import javafx.util.Duration;
 
 
@@ -88,6 +93,12 @@ public class ApplicationGUI extends Application {
         date_main.setLayoutY(60);
         grid.getChildren().add(date_main);
 
+        Timeline alertTimeline = new Timeline(
+                new KeyFrame(Duration.seconds(1), event -> AlertScreen.showAlertIfTimePassed())
+        );
+        alertTimeline.setCycleCount(Timeline.INDEFINITE);
+        alertTimeline.play();
+
         //add border lines to the notebook around the date and time
         Line b1 = new Line();
         b1.setStartX(420);
@@ -102,6 +113,12 @@ public class ApplicationGUI extends Application {
 
         grid.getChildren().addAll(b1,b2);
 
+        // Items
+        Text[] items = new Text[14];
+        for (int i = 0; i < 14; i++) {
+            Text textField = new Text();
+            items[i] = textField;
+        }
 
         //add lines for the items
         //we can have 14 lines of items
@@ -114,8 +131,30 @@ public class ApplicationGUI extends Application {
             l1.setEndY(line_y);
             grid.getChildren().add(l1);
 
+            items[i].setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 16));
+            items[i].setLayoutX(70);
+            items[i].setLayoutY(line_y - 1);
+            grid.getChildren().add(items[i]);
+
+            Timeline itemTimeline = new Timeline(
+                    new KeyFrame(Duration.seconds(1), event -> updateItems(items))
+            );
+            itemTimeline.setCycleCount(Timeline.INDEFINITE);
+            itemTimeline.play();
+
             line_y = line_y + 30;
         }
+
+        // Notes
+        Label note = new Label();
+        note.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 16));
+        note.setLayoutX(70);
+        note.setLayoutY(530);
+        note.setMaxWidth(500);
+        note.setWrapText(true);
+        note.setLineSpacing(10);
+        grid.getChildren().add(note);
+
         //add lines for the notes
         int line_y2 = 550;
         for (int i = 0; i < 8; i++) {
@@ -125,6 +164,12 @@ public class ApplicationGUI extends Application {
             l1.setEndX(550);
             l1.setEndY(line_y2);
             grid.getChildren().add(l1);
+
+            Timeline itemTimeline = new Timeline(
+                    new KeyFrame(Duration.seconds(1), event -> updateNote(note))
+            );
+            itemTimeline.setCycleCount(Timeline.INDEFINITE);
+            itemTimeline.play();
 
             line_y2 = line_y2 + 30;
         }
@@ -187,6 +232,29 @@ public class ApplicationGUI extends Application {
             timeText.setText(Integer.toString(check) + " : " + min + " AM");
         }
     }
+
+    private void updateItems(Text[] items) {
+        for (int i = 0; i < 14; i++) {
+            ArrayList<String> item = ItemController.getItem(i);
+            if (!item.isEmpty()) {
+                items[i].setText(i + 1 + ". " + item.get(0) + ": " + item.get(1));
+            } else {
+                items[i].setText("");
+            }
+        }
+    }
+
+    private void updateNote(Label note) {
+        for (int i = 0; i < 8; i++) {
+            String noteText = NoteController.getNote();
+            if (!noteText.isEmpty()) {
+                note.setText(noteText);
+            } else {
+                note.setText("");
+            }
+        }
+    }
+
     public static void main(String[] args) {
         launch();
     }
