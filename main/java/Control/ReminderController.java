@@ -6,7 +6,6 @@ package Control;
 
 import Entity.Date;
 import Entity.Reminder;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
@@ -27,15 +26,15 @@ public class ReminderController {
         return arrayList;
     }
 
-    public static void setItem(String title, LocalDateTime date, int index) {
-        reminders.put(index, new Reminder(title, new Date(date)));
+    public static void setItem(String title, String date, String time, int index) {
+        reminders.put(index, new Reminder(title, new Date(date, time)));
     }
 
-    public static void addItem(String title, LocalDateTime date) {
+    public static void addItem(String title, String date, String time) {
         int key = 0;
 
         if (reminders.size() < 10) {
-            Reminder reminder = new Reminder(title, new Date(date));
+            Reminder reminder = new Reminder(title, new Date(date, time));
 
             for (int i = 0; i < 10; i++) {
                 if (!reminders.containsKey(i)) {
