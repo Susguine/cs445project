@@ -7,11 +7,11 @@ public class NoteController {
         return note;
     }
 
-    public void setNote(String str) {
+    public static void setNote(String str) {
         note = str;
     }
 
-    public void deleteNote() {
+    public static void deleteNote() {
         note = "";
     }
 }
