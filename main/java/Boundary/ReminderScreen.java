@@ -329,7 +329,7 @@ public class ReminderScreen extends ApplicationGUI{
             AtomicInteger n_change = new AtomicInteger();
             cn.setOnAction(m-> {
                     //make sure to get items and fill the Text area from the entities class here
-                    n_change.set(Integer.parseInt(ion.getText()));
+                    n_change.set(Integer.parseInt(ion.getText()) - 1);
                     ArrayList<String> rdt = new ArrayList<>();
                     rdt = ReminderController.getItem(n_change.get());
                     ie.appendText(rdt.get(0));
