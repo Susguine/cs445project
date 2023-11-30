@@ -28,11 +28,12 @@ public class NoteScreen extends ApplicationGUI{
         }
 
         Button b_b_m = new Button("Back To Main Page");
+        Button ai = new Button("Add Note");
         Button ei = new Button("Edit Note");
         Button di = new Button("Delete Note");
         //evenly space out the buttons
         HBox btnHB = new HBox(10);
-        btnHB.getChildren().addAll(ei,di,b_b_m);
+        btnHB.getChildren().addAll(ai,ei,di,b_b_m);
         btnHB.setLayoutX(150);
         btnHB.setLayoutY(10);
         //adding to the plane of the scene
@@ -45,6 +46,41 @@ public class NoteScreen extends ApplicationGUI{
             //if there is previous note already filled then populate otherwise no
             grid.getChildren().remove(btnHB);
             Text item = new Text("Change Note Below:");
+            TextArea ne = new TextArea();
+            Button confirm = new Button("Confirm Changes");
+            Button back = new Button("Back");
+
+            ne.setLayoutX(150);
+            ne.setLayoutY(150);
+            ne.setPrefWidth(400);
+            ne.setPrefHeight(300);
+
+            item.setLayoutX(150);
+            item.setLayoutY(140);
+            HBox centering = new HBox(10);
+            centering.setLayoutX(150);
+            centering.setLayoutY(460);
+            centering.getChildren().addAll(confirm,back);
+            grid.getChildren().addAll(centering,item,ne);
+            ne.appendText(NoteController.getNote());
+            confirm.setOnAction(b-> {
+                    //here we do the controller and apply to the main screen along with a number that says what item number it is and sussefully edit it.
+                    //make sure to double check if there is a note added or not
+                    String fill = ne.getText();
+                    NoteController.setNote(fill);
+                    grid.getChildren().removeAll(centering,item,ne);
+                    grid.getChildren().add(btnHB);
+                });
+            back.setOnAction(c-> {
+                    //there is no processing just getting back to the other page
+                    grid.getChildren().removeAll(centering,item,ne);
+                    grid.getChildren().add(btnHB);
+                });
+            });
+        ai.setOnAction(e-> {
+            //if there is previous note already filled then populate otherwise no
+            grid.getChildren().remove(btnHB);
+            Text item = new Text("Add Note Below:");
             TextArea ne = new TextArea();
             Button confirm = new Button("Confirm Changes");
             Button back = new Button("Back");
