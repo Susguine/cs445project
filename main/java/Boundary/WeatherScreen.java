@@ -18,6 +18,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.time.LocalDate;
+
 /**
  *This class displays weather-related information, such as current conditions, forecasts, and other weather data
  * @author rschi
@@ -55,19 +57,35 @@ public class WeatherScreen extends ApplicationGUI{
         Weather currentWeather = WeatherAPI.getWeather();
 
         Text title1 = new Text();
-        title1.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
+        title1.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 48));
         title1.setFill(Color.CRIMSON);
-        title1.setText(String.valueOf(currentWeather.getTemperature()));
-        title1.setLayoutX(100);
-        title1.setLayoutY(60);
+        title1.setText(String.valueOf("Temperature: " + currentWeather.getTemperature() + "°F"));
+        title1.setLayoutX(60);
+        title1.setLayoutY(260);
         grid.getChildren().add(title1);
 
         Text title2 = new Text();
-        title2.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
-        title2.setFill(Color.CRIMSON);
-        title2.setText(String.valueOf(currentWeather.getCondition()));
+        title2.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 48));
+        title2.setFill(Color.AQUAMARINE);
+        title2.setText(String.valueOf("Condition: " + currentWeather.getCondition()));
         title2.setLayoutX(100);
-        title2.setLayoutY(90);
+        title2.setLayoutY(360);
         grid.getChildren().add(title2);
+
+        Text title3 = new Text();
+        title3.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 48));
+        title3.setFill(Color.GRAY);
+        title3.setText(String.valueOf(LocalDate.now()));
+        title3.setLayoutX(60);
+        title3.setLayoutY(760);
+        grid.getChildren().add(title3);
+
+        Text title4 = new Text();
+        title4.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 48));
+        title4.setFill(Color.GRAY);
+        title4.setText(String.valueOf("Cape Girardeau,\nMissouri"));
+        title4.setLayoutX(60);
+        title4.setLayoutY(560);
+        grid.getChildren().add(title4);
     }
 }
